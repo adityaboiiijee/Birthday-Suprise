@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday!</title>
+    <meta name="description" content="Birthday Surprise" />
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+      const correctPassword = "JLTM"; // Set your password here
+      const userPassword = prompt("Enter your ALLEN Batch Code as password:");
+  
+      // If the password is incorrect, redirect to an access-denied page or show a message
+      if (userPassword !== correctPassword) {
+        window.location.replace("about:blank"); // Prevents the rest of the page from loading.
+        document.write("<h2 style='text-align:center; padding: 2rem;'>🎉 Access Denied! Incorrect password.</h2>");
+        throw new Error("Access blocked: incorrect password.");
+      }
+    </script>
+    <style>
+      /* Base styles */
+      :root {
+        --primary-blue: #0FA0CE;
+        --primary-light-blue: #33C3F0;
+        --secondary-blue: #1EAEDB;
+        --soft-blue: #D3E4FD;
+        --ocean-blue: #0EA5E9;
+        --charcoal: #403E43;
+        --light-gray: #C8C8C9;
+        --silver: #9F9EA1;
+        --white: #fff;
+        --radius: 0.5rem;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(to bottom, var(--soft-blue), var(--primary-light-blue));
+        padding: 2rem 1rem;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .title {
+        font-size: 3rem;
+        font-family: 'Dancing Script', cursive;
+        text-align: center;
+        margin-bottom: 2rem;
+        color: var(--primary-blue);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .balloons-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .balloon {
+        position: absolute;
+        cursor: pointer;
+        pointer-events: auto;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .balloon:nth-child(2n) { animation-duration: 7s; }
+      .balloon:nth-child(3n) { animation-duration: 8s; }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+      }
+
+      .pop-animation {
+        animation: pop 0.3s ease-out forwards;
+      }
+
+      @keyframes pop {
+        0% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(0); opacity: 0; }
+      }
+
+      .compliment {
+        position: absolute;
+        width: 160px;
+        text-align: center;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--primary-pink);
+        transform: translate(-50%, -20px);
+        animation: fadeIn 0.3s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translate(-50%, 0); }
+        to { opacity: 1; transform: translate(-50%, -20px); }
+      }
+
+      .main-content {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  text-align: center;
+}
+
+
+      .surprise-button {
+        background-color: var(--primary-blue);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 9999px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        transition: transform 0.3s, background-color 0.3s;
+      }
+
+      .surprise-button:hover {
+        background-color: var(--secondary-blue);
+        transform: scale(1.05);
+      }
+
+      .songs-container {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s, transform 0.5s;
+      }
+
+      .songs-container.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .hidden { display: none; }
+
+      .song-card {
+        border-radius: var(--radius);
+        overflow: hidden;
+        background-color: var(--white);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s;
+        display: flex;
+        align-items: center;
+      }
+
+      .song-card:hover { transform: scale(1.03); }
+
+      .song-image-container {
+  flex: 0 0 30%;
+  position: relative;
+  padding-left: 1rem; /* <-- shift right */
+}
+
+
+      .song-image {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+      }
+
+      .song-details {
+        flex: 1;
+        padding: 1rem;
+      }
+
+      .song-title {
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .song-album {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .play-button {
+  background-color: var(--soft-blue);
+  color: var(--ocean-blue);
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+
+  font-size: 1.2rem; /* Optional: Adjust size */
+  line-height: 1;     /* 🔥 Key fix */
+}
+
+
+      .play-button:hover {
+        background-color: var(--primary-blue);
+        color: white;
+        transform: scale(1.1);
+      }
+
+      .cake-container {
+        position: relative;
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto 2rem;
+      }
+
+      .cake {
+        position: relative;
+        width: 100%;
+        text-align: center;
+      }
+
+      .cake-image {
+        position: relative;
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .cake-animation {
+        width: 100%;
+        display: block;
+        border-radius: var(--radius);
+      }
+
+      .overlay-text {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        width: 100%;
+        background-color: rgba(255, 146, 165, 0.8);
+        color: white;
+        padding: 0.5rem;
+        font-family: 'Dancing Script', cursive;
+        font-size: 1.5rem;
+      }
+
+      @media (min-width: 640px) {
+        .songs-container {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .songs-container {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    
+    <div class="container">
+      <h1 class="title">Happy Birthday! 🎉</h1>
+
+      <div class="balloons-container" id="balloons-container"></div>
+
+      <div class="main-content">
+        <button id="surprise-button" class="surprise-button">
+          🎁 Click for a Surprise
+        </button>
+      </div>
+
+      <div id="songs-container" class="songs-container hidden"></div>
+
+      <div class="cake-container">
+        <div class="cake">
+          <div class="cake-image">
+            <img src="https://media.tenor.com/L72x_1-DtRIAAAAM/birthday-slice.gif" alt="Cake Cutting Animation" class="cake-animation">
+            <div class="overlay-text">Happy Birthday!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const songs = [
+        { title: "Tera Zikr", album: "Tera Zikr", image: "https://i.scdn.co/image/ab67616d0000b273b560693c17b20f01614c585c", spotifyUrl: "https://open.spotify.com/track/0OfaueVeRebAfWsAHajj3z" },
+        { title: "Mujhe Peene Do", album: "Mujhe Peene Do", image: "https://i.scdn.co/image/ab67616d0000b273057c817a06a8155375294e1f", spotifyUrl: "https://open.spotify.com/album/5XurzQE6FZrn7fQPrX4Vcc" },
+        { title: "Mahiye Jinna Sona", album: "Mahiye Jinna Sona", image: "https://i.scdn.co/image/ab67616d0000b273cc36bc60d9ce49e5f00fb382", spotifyUrl: "https://open.spotify.com/track/2ncqKdTj6dz7tWoTMMrAtq" },
+        { title: "Ek Tarfa", album: "Ek Tarfa", image: "https://i.scdn.co/image/ab67616d0000b2733ba439cbdaca41d0c4a77baf", spotifyUrl: "https://open.spotify.com/album/1Da8Vav4NVoQfNX7HAR2zZ" },
+        { title: "Bhula Dunga", album: "Bhula Dunga", image: "https://a10.gaanacdn.com/gn_img/albums/mGjKr1b6zX/GjKr7LGV36/size_m.jpg", spotifyUrl: "https://open.spotify.com/album/4DcFYtjt3WdLqZtBbCk3wa" },
+        { title: "Mehrama", album: "Love Aaj Kal", image: "https://i.scdn.co/image/ab67616d0000b273f1a49a75d38ffb19ca543cb9", spotifyUrl: "https://open.spotify.com/track/6cUOiOY5qh2FpIQWIYAd2h" },
+        { title: "Hawa Banke", album: "Hawa Banke", image: "https://i.scdn.co/image/ab67616d0000b273d47204a03807a0456e8bc2ca", spotifyUrl: "https://open.spotify.com/track/1L3Nsi7YXtBxTdnbqektia" },
+        { title: "Asal Mein", album: "Asal Mein", image: "https://i.scdn.co/image/ab67616d0000b2739d6996e45e143c25d0475e0d", spotifyUrl: "https://open.spotify.com/track/1StFDfq4raRws97W8Wb3QS" },
+        { title: "Do Din", album: "Do Din", image: "https://i.scdn.co/image/ab67616d0000b2737ad4ead281b13493ce6df1d3", spotifyUrl: "https://open.spotify.com/track/3kSYKolWOj0yZMWFqwcCBs" },
+        { title: "Baarish Lete Aana", album: "Baarish Lete Aana", image: "https://i.scdn.co/image/ab67616d0000b273f4214316bcef51c998621e19", spotifyUrl: "https://open.spotify.com/track/6Oq4lIhSSYdA6WuXU9sPeG" }
+      ];
+
+      const balloonColors = ["#0FA0CE", "#33C3F0", "#1EAEDB", "#D3E4FD", "#0EA5E9", "#403E43"];
+      const compliments = [
+        "You're amazing! ✨", "Your smile lights up the room! 🌟", "You make the world better! 💖",
+        "You're absolutely wonderful! 🎈", "You're one in a million! 🌈", "You're the sweetest person ever! 💫",
+        "You brighten my day! 🌞", "Just seeing you makes me happy! 💕", "You have the best laugh! 😊", "Being around you is always fun! 🎉"
+      ];
+
+      const balloonsContainer = document.getElementById('balloons-container');
+      const surpriseButton = document.getElementById('surprise-button');
+      const songsContainer = document.getElementById('songs-container');
+
+      function createBalloons() {
+        balloonsContainer.innerHTML = '';
+        for (let i = 0; i < 12; i++) {
+          const balloonDiv = document.createElement('div');
+          balloonDiv.className = 'balloon';
+          balloonDiv.style.left = `${Math.random() * 90}%`;
+          balloonDiv.style.top = `${Math.random() * 70}%`;
+          const balloonColor = balloonColors[i % balloonColors.length];
+          balloonDiv.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="${balloonColor}" fill-opacity="0.9" stroke="${balloonColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+            </svg>
+          `;
+          balloonDiv.addEventListener('click', function () {
+            if (!this.classList.contains('pop-animation')) {
+              this.classList.add('pop-animation');
+              const randomCompliment = compliments[Math.floor(Math.random() * compliments.length)];
+              const complimentDiv = document.createElement('div');
+              complimentDiv.className = 'compliment';
+              complimentDiv.textContent = randomCompliment;
+              complimentDiv.style.left = '50%';
+              this.appendChild(complimentDiv);
+              setTimeout(() => {
+                this.classList.remove('pop-animation');
+                if (complimentDiv.parentNode === this) {
+                  this.removeChild(complimentDiv);
+                }
+                setTimeout(createBalloons, 1000);
+              }, 2000);
+            }
+          });
+          balloonsContainer.appendChild(balloonDiv);
+        }
+      }
+
+      function createSongCards() {
+        songsContainer.innerHTML = '';
+        songs.forEach(song => {
+          const card = document.createElement('div');
+          card.className = 'song-card';
+          card.innerHTML = `
+            <div class="song-image-container">
+              <img src="${song.image}" alt="${song.title}" class="song-image">
+            </div>
+            <div class="song-details">
+              <div class="song-title">${song.title}</div>
+              <div class="song-album">${song.album}</div>
+              <a href="${song.spotifyUrl}" target="_blank" rel="noopener noreferrer">
+                <button class="play-button">
+  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M6 4.5v7l6-3.5-6-3.5z"/>
+  </svg>
+</button>
+
+              </a>
+            </div>
+          `;
+          songsContainer.appendChild(card);
+        });
+      }
+
+      surpriseButton.addEventListener('click', function () {
+  songsContainer.classList.toggle('hidden');
+  if (!songsContainer.classList.contains('hidden')) {
+    songsContainer.classList.add('show');
+    surpriseButton.style.display = 'none'; // 👈 Hide the button
+  } else {
+    songsContainer.classList.remove('show');
+  }
+});
+
+
+      document.addEventListener('DOMContentLoaded', () => {
+        createBalloons();
+        createSongCards();
+      });
+    </script>
+  </body>
+</html>
