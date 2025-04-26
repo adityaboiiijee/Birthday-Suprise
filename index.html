@@ -119,6 +119,14 @@
   text-align: center;
 }
 
+.envelope {
+            display: inline-block;
+            margin-top: 20px;
+            cursor: pointer;
+            font-size: 30px;
+            color: #ff4d6d;
+        }
+
 
       .surprise-button {
         background-color: var(--primary-blue);
@@ -237,6 +245,25 @@
         text-align: center;
       }
 
+      .gifts-container {
+  margin: 2rem auto;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  z-index: 5;
+  position: relative;
+}
+
+.gift-box {
+  font-size: 3rem;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.gift-box:hover {
+  transform: scale(1.2) rotate(10deg);
+}
+
       .cake-image {
         position: relative;
         border-radius: var(--radius);
@@ -278,16 +305,22 @@
   <body>
     
     <div class="container">
-      <h1 class="title">Happy Birthday! 🎉</h1>
+      <h1 class="title">Happy Birthday Nivedita 🎉</h1>
 
       <div class="balloons-container" id="balloons-container"></div>
 
       <div class="main-content">
-        <button id="surprise-button" class="surprise-button">
+        <button id="surprise-button" class="surprise-button" style="margin-top: 20px; padding: 10px 20px; font-size: 16px;">
           🎁 Click for a Surprise
+          
         </button>
       </div>
-
+      <div class="gifts-container">
+        <div class="gift-box" onclick="showGiftMessage(1)">🎁</div>
+        <div class="gift-box" onclick="showGiftMessage(2)">🎁</div>
+        <div class="gift-box" onclick="showGiftMessage(3)">🎁</div>
+      </div>
+      
       <div id="songs-container" class="songs-container hidden"></div>
 
       <div class="cake-container">
@@ -313,6 +346,22 @@
         { title: "Do Din", album: "Do Din", image: "https://i.scdn.co/image/ab67616d0000b2737ad4ead281b13493ce6df1d3", spotifyUrl: "https://open.spotify.com/track/3kSYKolWOj0yZMWFqwcCBs" },
         { title: "Baarish Lete Aana", album: "Baarish Lete Aana", image: "https://i.scdn.co/image/ab67616d0000b273f4214316bcef51c998621e19", spotifyUrl: "https://open.spotify.com/track/6Oq4lIhSSYdA6WuXU9sPeG" }
       ];
+
+      function showGiftMessage(giftNumber) {
+  let message = "";
+  switch (giftNumber) {
+    case 1:
+      message = "🎉 Wishing you a Really Happy Birthday Nivedita...";
+      break;
+    case 2:
+      message = "🎁 May your day be filled with laughter and joy!";
+      break;
+    case 3:
+      message = "🌟 I am Actually really sorry to bother you so many times, but i really want to wish you on your birthday, It's your choice to apologise me or not. Agar tum mujhe sunana chahte ho to suna bhi sakte ho...";
+      break;
+  }
+  alert(message);
+}
 
       const balloonColors = ["#0FA0CE", "#33C3F0", "#1EAEDB", "#D3E4FD", "#0EA5E9", "#403E43"];
       const compliments = [
@@ -401,6 +450,7 @@
         createBalloons();
         createSongCards();
       });
+      
     </script>
   </body>
 </html>
